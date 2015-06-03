@@ -3,19 +3,21 @@ import string
 import xlrd
 import xlwt
 from xlutils.copy import copy
-##### variables for a*package 
+
+##### variables for assignment 
 rootdir = 'a1'
 markfile = 'a1marks.xls'
 markcell = [33,'J']
 commentcell = [30,'A']
-##### variables for CS349-S15.xlsx 
+
+##### variables for summary excel file
 summaryfile = 'CS349-S15.xlsx'
 summarysheet = 'A1'
-userID_col = 3
-grade_col = 9 
-comment_col = 11
-linerange = (109,137) # note that the 2nd index is one bigger than end line num
-                            # shown in xls file
+userID_col = 'C'
+grade_col = 'I' 
+comment_col = 'K'
+linerange = (109,136) 
+
 def col2num(col_ind):
     '''
     ref:
@@ -51,16 +53,16 @@ def copy2xls(students):
     worksheet = workbook.sheet_by_name(summarysheet)
     bookcopy = copy(workbook)
     sheetcopy = bookcopy.get_sheet(workbook.sheet_names().index(summarysheet))
-    for row in range(linerange[0],linerange[1]):
-        usr = worksheet.cell_value(row-1, userID_col-1)        
-        sheetcopy.write(row-1, grade_col-1, students[usr]['mark'])
-        sheetcopy.write(row-1, comment_col-1, students[usr]['comment'])
-    bookcopy.save(summaryfile+'.xls') 
+    for row in range(linerange[0],linerange[1]+1):
+        usr = worksheet.cell_value(row-1, col2num(userID_col)-1)        
+        sheetcopy.write(row-1, col2num(grade_col)-1, students[usr]['mark'])
+        sheetcopy.write(row-1, col2num(comment_col)-1, students[usr]['comment'])
+    bookcopy.save(summarysheet +'.xls')
 
 
 if __name__ == "__main__":
     markcell[1] = col2num(markcell[1]) if type(markcell[1]) is str else markcell[1] 
     commentcell[1] = col2num(commentcell[1]) if type(commentcell[1]) is str else commentcell[1] 
     students = usr_mark_tuple()
-    #print students
     copy2xls(students)
+    print "Done. Please copy final marks in " + summarysheet +'.xls' + ' to ' + summaryfile
