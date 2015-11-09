@@ -1,0 +1,165 @@
+
+
+CS349 ASSIGNMENT 2: REMOTE CONTROL EXCAVATOR
+
+Marker: Haiyu Zhen 
+
+
+
+GUIDELINES
+
+The assignment needs to compile and run in order for the TA to mark it. If it 
+
+doesn't compile, but the TA is able to get it working, you will only lose marks 
+
+for the "Deliverables" section. If they cannot get it to compile, you 
+
+receive zero for the assignment.
+
+
+
+The marking scheme below awards marks based on successful completion of the 
+
+requirements. Note that severely deviating from the requirements may result 
+
+in penalties that aren't listed below (i.e. you can't write a Java assignment 
+
+in C++/OpenGL and receive a full-grade, even if you've otherwise met the 
+
+requirements). 
+
+
+
+If you have any questions about your grade, please contact the TA that graded 
+
+this assignment (contact information above).
+
+
+
+There are 110 available marks, marked out of 100.
+
+
+
+TOTAL: 
+
+/100 
+
+
+
+MARKS:
+
+
+
+DELIVERABLES (5)
+
+(/5) 'make run' compiles and runs the program. README.txt contains required 
+
+information.
+
+
+
+DRAWING AND PRESENTATION (10)
+
+(/5) Excavator displayed with at least five parts (body, treads, boom, arm, 
+
+bucket).
+
+(/5) Some care has been invested in presentation (color, details, etc).
+
+
+
+SCRIPTING (15)
+
+(/7) Can record/save a script.
+
+(/8) Can load and play a script (one should be included).
+
+
+
+DIRECT MANIPULATION (60)
+
+
+
+Usability
+
+(/10)  Direct manipulation is easy to discover and use (e.g. drag body to 
+
+reposition; drag arms to rotate; drag corners or sides to scale) (full marks if 
+
+discoverable manipulation; -5 if different modes need to be activated via multiple 
+
+mouse buttons; -10 if a combination of keyboard and mouse input needed to switch 
+
+modes)
+
+
+
+Scene graph
+
+(/10) Maintain a transformation matrix in each node of the scene graph. As 
+
+the user manipulates the node, create appropriate translate, rotate, and scale 
+
+matrices and multiply them into the node's matrix. (0 marks if the translation, 
+
+rotation, and scaling values are maintained as individual values within the node).
+
+
+
+Translation
+
+(/5) The body can be moved, as described in the requirements.
+
+
+
+Rotation
+
+(/10) Nodes rotate about their parent when moved (-4 if it drifts away from the 
+
+mouse; -8 if rotation has little relationship to the mouse movement).
+
+(/5) Constraints: The boom can pivot 80° from vertical. No part of the arm 
+
+or bucket can collide with the boom and the angle between the arm and the boom 
+
+is no more than 170°.  The bucket is constrained so there is at least 20° between 
+
+it and the arm but no more than 190°.
+
+
+
+Scaling
+
+(/5) The entire excavator can be scaled, without affecting other operations.
+
+(/10) The arm can be scaled to twice its original length without affecting its
+
+width or the bucket (-2 if no scale constraint; -5 if the bucket scales when you 
+
+scale the arm).
+
+
+
+Other
+
+(/2) File-Reset resets the excavator to its initial state and File-Quit exits 
+
+the app.
+
+(/3) Fix the initial click bug (demonstrated in-class).
+
+
+
+ENHANCEMENT (20)
+
+(/20) A significant enhancement is included (and documented in the readme).
+
+Marks awarded for both innovation and effort (approx. half marks awarded for 
+
+innovation and half for effort; a significant enhancment is required for full 
+
+marks).
+
+
+
+COMMENTS:

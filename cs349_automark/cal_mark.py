@@ -1,7 +1,11 @@
 import os
 import re
 import string
+import xlrd
 from xlutils.copy import copy
+
+from tempfile import mkstemp
+from shutil import move
 
 ##### variables for assignment 
 rootdir = 'a2'
@@ -11,11 +15,11 @@ comment_line = 165
 
 ##### variables for summary excel file
 summaryfile = 'CS349-F15.xlsx'
-summarysheet = 'A1'
-userID_col = 'C'
+summarysheet = 'A2'
+userID_col = 'B'
 grade_col = 'G' 
-comment_col = 'K'
-linerange = (85,104) 
+comment_col = 'H'
+linerange = (2,21) 
 
 def get_usrid():
     global rootdir
@@ -28,14 +32,26 @@ def get_usrid():
             students.append(os.path.basename(dir))
     return students
 
-
+# http://stackoverflow.com/questions/39086/search-and-replace-a-line-in-a-file-in-python
 def getTotal(userids):
     global rootdir
     marks = {}
     for student in userids:
         filepath = rootdir + '/' + student + '/a2marks.txt'
+        newpath = rootdir + '/' + student + '/a2_marks.txt'
         total = calTotal(filepath)
+        print student + ': ' + str(total)
+        marks[student] = total
         # to do: write to file
+        with open(newpath,'w') as nf:
+            with open(filepath) as old_file:
+                i = 0
+                for line in old_file:
+                    i+=1
+                    if i == total_line:
+                        line = str(total) + line
+                    nf.write(line)
+
     return marks
         
 
@@ -48,7 +64,7 @@ def calTotal(filepath):
         for line in lines:
             i+=1
             if i in mark_lines:
-                print line
+                # print line
                 mark = regex.search(line).group(1)
                 # print mark
                 if len(mark) == 0:
@@ -57,11 +73,35 @@ def calTotal(filepath):
                     total += int(mark)
 
     return total
+                
+
+def col2num(col_ind):
+    '''
+    ref:
+    http://stackoverflow.com/questions/7261936/convert-an-excel-or-spreadsheet-column-letter-to-its-number-in-pythonic-fashion
+    '''
+    num = 0
+    for c in col_ind:
+        if c in string.ascii_letters:
+            num = num*26 + (ord(c.upper()) - ord('A')) + 1
+    return num
+
+
+def copy2xls(students):
+    workbook = xlrd.open_workbook(summaryfile)
+    worksheet = workbook.sheet_by_name(summarysheet)
+    bookcopy = copy(workbook)
+    sheetcopy = bookcopy.get_sheet(workbook.sheet_names().index(summarysheet))
+    for row in range(linerange[0],linerange[1]+1):
+        usr = worksheet.cell_value(row-1, col2num(userID_col)-1)
+        usr = usr[:8] if len(usr) > 8 else usr      
+        sheetcopy.write(row-1, col2num(grade_col)-1, students[usr])
+    bookcopy.save(summarysheet +'.xls')
 
 
 if __name__ == "__main__":
     students = get_usrid()
     # print '[%s]' % ', '.join(map(str, students))
-    print calTotal('a2/apopplew/a2marks.txt')
-
-    # print "Done. Please copy final marks in " + summarysheet +'.xls' + ' to ' + summaryfile
+    marks = getTotal(students)
+    copy2xls(marks)
+    print "Done. Please copy final marks in " + summarysheet +'.xls' + ' to ' + summaryfile

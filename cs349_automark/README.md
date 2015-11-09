@@ -24,3 +24,8 @@ The script should be under `a*package` folder, along with `CS349-S15.xlsx` and `
 
 Then modify variables for assignment and variables for summary excel file.
 
+### cal_mark.py
+The sample mark file is included in this repo as 'sample_mark.txt', each mark item looks like:``(/7) Can record/save a script.``
+
+This script is to calculate the total marks by hand and put to line ``TOTAL`` in the mark file.
+
