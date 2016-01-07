@@ -1,0 +1,14 @@
+# Parameters
+ASSIGN=a1
+
+ARRAY=( abc def )
+
+cd ./$ASSIGN/
+
+for i in "${ARRAY[@]}"
+do
+	cd  $i
+	svn add a1_marks.txt
+	svn commit -m "Added a1 grades"
+	cd ..
+done
