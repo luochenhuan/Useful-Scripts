@@ -1,0 +1,20 @@
+#!/bin/sh
+# CS349 A1 Marking Script
+
+# Parameters
+ASSIGN=a1
+USERNAME={{xxx}}
+PASSWORD={{xxx}}
+REPO="svn://ubuntu1204-004.student.cs.uwaterloo.ca:6002/cs349_repo"
+# student IDs assigned to you
+# currently listed are IDs of sample assignments
+ARRAY=( abc def )
+for i in "${ARRAY[@]}"
+do
+	svn checkout --username $USERNAME --password $PASSWORD -r {"2015-12-08 17:15"} $REPO/$i/$ASSIGN ./$ASSIGN/$i
+	cp a1marks.txt ./$ASSIGN/$i
+done
+
+# just in case 
+# if you need to check out the entire repo
+# svn checkout --username $USERNAME --password $PASSWORD -r {"2014-09-29 00:30:00"} $REPO ./$ASSIGN
